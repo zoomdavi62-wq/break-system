@@ -1,0 +1,17 @@
+{
+  "name": "break-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BREAK SYSTEM - aplicativo pessoal offline",
+  "scripts": {
+    "android": "npx cap open android",
+    "sync": "npx cap sync"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "appId": "com.breaksystem.app",
+  "appName": "BREAK SYSTEM",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

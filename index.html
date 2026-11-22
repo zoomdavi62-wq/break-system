@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>BREAK SYSTEM</title>
+<style>
+:root{--bg:#060c16;--panel:#0b1726;--panel2:#102237;--line:#183650;--cyan:#38d9f5;--blue:#4e8dff;--text:#e8f4ff;--muted:#86a3bb;--gold:#e8c36a;--red:#ff657a;--green:#64e2ae}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(ellipse at 50% -20%,#12314c 0,#07111f 48%,#040811 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);}.app{max-width:760px;margin:auto;min-height:100vh;padding:18px 15px 100px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}.brand{font-size:12px;letter-spacing:4px;color:var(--cyan);font-weight:900}.subbrand{font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:4px}.level-chip{border:1px solid #246080;background:#0c2031;border-radius:8px;padding:8px 11px;color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:1px}
+.hero{position:relative;overflow:hidden;border:1px solid #1b4a66;background:linear-gradient(135deg,#0e2639,#091522 65%);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 12px 38px #0005}.hero:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #38d9f522;border-radius:50%;right:-80px;top:-100px;box-shadow:0 0 0 20px #38d9f508,0 0 0 42px #38d9f506}.eyebrow{font-size:10px;letter-spacing:3px;color:var(--muted);font-weight:800}.hero h1{font-size:clamp(25px,7vw,38px);letter-spacing:2px;margin:9px 0 5px}.hero p{margin:0;color:var(--muted);font-size:12px}.hero-line{display:flex;justify-content:space-between;align-items:end;gap:12px}.rank{font-size:11px;color:var(--gold);border:1px solid #806b36;padding:6px 9px;border-radius:6px;white-space:nowrap}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:22px 2px 11px}.section-head h2{font-size:13px;letter-spacing:2px;margin:0}.hint{font-size:10px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:linear-gradient(145deg,#0e2032,#091522);border:1px solid var(--line);border-radius:12px;padding:13px;min-width:0}.stat-top{display:flex;justify-content:space-between;align-items:center;gap:5px}.stat-name{font-size:11px;color:#c5d8e8;font-weight:800;letter-spacing:.8px}.stat-icon{font-size:16px}.stat-value{font-size:25px;font-weight:900;margin:9px 0 8px;letter-spacing:.5px}.bar{height:5px;background:#172c40;border-radius:8px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,#2879c9,var(--cyan));border-radius:8px}.stat-foot{display:flex;justify-content:space-between;margin-top:7px;font-size:9px;color:var(--muted)}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:10;background:#07111fee;backdrop-filter:blur(16px);border-top:1px solid #1b3850;padding:9px max(10px,env(safe-area-inset-right)) calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);max-width:760px;margin:auto}.nav button{background:none;border:0;color:#718da6;font-size:9px;letter-spacing:1px;font-weight:900;padding:6px 2px}.nav button b{display:block;font-size:19px;margin-bottom:4px}.nav button.active{color:var(--cyan)}
+.page{display:none}.page.active{display:block}.panel{background:#0b1726;border:1px solid var(--line);border-radius:13px;padding:15px;margin-bottom:11px}.panel h3{font-size:12px;letter-spacing:1.5px;margin:0 0 12px}.mission{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid #183047}.mission:first-of-type{border-top:0}.mission-main{flex:1;min-width:0}.mission-name{font-size:12px;font-weight:800}.mission-meta{font-size:10px;color:var(--muted);margin-top:4px}.reward{font-size:10px;color:var(--cyan);white-space:nowrap}.done{border:1px solid #276b59;background:#0d2b27;color:var(--green);border-radius:8px;padding:8px 10px;font-size:10px;font-weight:900}.done:disabled{opacity:.55}.btn{border:1px solid #27749a;background:#10334a;color:#dff9ff;border-radius:8px;padding:10px 12px;font-weight:800;font-size:11px}.btn.secondary{border-color:#294257;background:#102033;color:#b9d0e2}.btn.danger{border-color:#754050;background:#351a28;color:#ffb5c0}.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.field{width:100%;background:#071321;border:1px solid #244158;color:var(--text);border-radius:8px;padding:11px;font-size:12px;outline:none}.field:focus{border-color:var(--cyan)}label{display:block;font-size:10px;color:var(--muted);margin:10px 0 6px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.tao-card{background:linear-gradient(145deg,#152b37,#0b1726);border:1px solid #4c6470;border-radius:14px;padding:18px;margin-bottom:12px}.tao-number{font-size:42px;font-weight:950;color:var(--gold);margin:8px 0}.tao-track{height:12px;background:#283643;border-radius:20px;overflow:hidden}.tao-track span{height:100%;display:block;background:linear-gradient(90deg,#c18a36,#f4d887);border-radius:20px}.tao-scale{display:flex;justify-content:space-between;color:var(--muted);font-size:9px;margin-top:7px}.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.item{background:linear-gradient(145deg,#112237,#0a1522);border:1px solid #28445d;border-radius:11px;padding:12px;display:flex;flex-direction:column;gap:7px}.item-icon{font-size:23px}.item-name{font-size:11px;font-weight:900}.item-desc{font-size:10px;color:var(--muted);min-height:26px}.item-bottom{display:flex;justify-content:space-between;align-items:center;gap:5px;margin-top:auto}.price{color:var(--gold);font-size:10px;font-weight:900}.small{font-size:10px;color:var(--muted)}.notice{border:1px solid #314c61;background:#0c1b2a;padding:11px;border-radius:9px;font-size:10px;line-height:1.5;color:#9db6ca;margin-bottom:12px}.empty{text-align:center;padding:24px;color:var(--muted);font-size:12px}.footer{text-align:center;color:#55718a;font-size:9px;letter-spacing:1px;margin-top:25px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.shop-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div><div class="brand">BREAK // SYSTEM</div><div class="subbrand">PERSONAL GROWTH INTERFACE</div></div><div class="level-chip" id="playerLevel">PLAYER LV. 0</div></header>
+
+<section id="break" class="page active">
+ <div class="hero"><div class="eyebrow">JANELA PRINCIPAL // STATUS</div><div class="hero-line"><div><h1>BREAK</h1><p>Seu progresso começa com constância.</p></div><div class="rank" id="rank">RANK E</div></div></div>
+ <div class="section-head"><h2>ATRIBUTOS</h2><span class="hint">NÍVEL 0 — 9.999.999</span></div>
+ <div class="grid" id="statsGrid"></div>
+ <div class="panel" style="margin-top:13px"><h3>REGISTRO DO SISTEMA</h3><div class="small" id="summary">Nenhuma missão concluída hoje.</div></div>
+</section>
+
+<section id="limit" class="page">
+ <div class="hero"><div class="eyebrow">JANELA DE OBJETIVOS</div><h1>LIMIT</h1><p>Missões diárias e desafios criados por você.</p></div>
+ <div class="notice">Conclua uma missão quando realmente a tiver realizado. Os exercícios são registros de rotina, não uma obrigação de treinar além dos seus limites. Descanse quando precisar.</div>
+ <div class="panel"><div class="section-head" style="margin:0 0 8px"><h2>MISSÕES DIÁRIAS</h2><span class="hint" id="dailyDate"></span></div><div id="dailyMissions"></div></div>
+ <div class="panel"><h3>CRIAR MISSÃO PERSONALIZADA</h3>
+  <label for="missionName">Nome da missão</label><input class="field" id="missionName" maxlength="48" placeholder="Ex.: Praticar um novo movimento">
+  <div class="form-grid"><div><label for="missionStat">Atributo aumentado</label><select class="field" id="missionStat"><option>Força</option><option>Resistência</option><option>Velocidade</option><option>Agilidade</option><option>Flexibilidade</option><option>Inteligência</option></select></div><div><label for="missionReward">Recompensa (níveis)</label><input class="field" id="missionReward" type="number" min="1" max="1000" value="5"></div></div>
+  <button class="btn" style="margin-top:12px;width:100%" id="addMission">+ ADICIONAR MISSÃO</button>
+ </div>
+ <div class="panel"><h3>MINHAS MISSÕES</h3><div id="customMissions"><div class="empty">Nenhuma missão personalizada criada.</div></div></div>
+</section>
+
+<section id="tao" class="page">
+ <div class="hero"><div class="eyebrow">JANELA DE EQUILÍBRIO</div><h1>TÂO</h1><p>Gerencie seus pontos de equilíbrio.</p></div>
+ <div class="tao-card"><div class="eyebrow">RESERVA DE TÂO</div><div class="tao-number"><span id="taoValue">0</span><span style="font-size:16px;color:#c7b68e"> / 120</span></div><div class="tao-track"><span id="taoBar" style="width:0%"></span></div><div class="tao-scale"><span>0</span><span>100 // LIMITE BASE</span><span>120 // EXTRA</span></div></div>
+ <div class="panel"><h3>AJUSTE MANUAL</h3><label for="taoAmount">Quantidade de pontos</label><input class="field" id="taoAmount" type="number" min="1" max="120" value="5"><div class="row" style="margin-top:10px"><button class="btn" style="flex:1" id="taoAdd">+ AUMENTAR</button><button class="btn danger" style="flex:1" id="taoRemove">− DIMINUIR</button></div><label for="taoExact">Definir valor exato</label><div class="row"><input class="field" id="taoExact" type="number" min="0" max="120" placeholder="0 a 120"><button class="btn secondary" id="taoSet">DEFINIR</button></div></div>
+ <div class="notice">O Tâo é um recurso fictício de organização pessoal. Meditação e pausas podem ser registradas como hábitos, mas os pontos são ajustados manualmente por você. Não há punição automática por estresse.</div>
+</section>
+
+<section id="shop" class="page">
+ <div class="hero"><div class="eyebrow">MERCADO DO SISTEMA</div><h1>LOJA</h1><p>Itens de evolução comprados com Tâo.</p></div>
+ <div class="panel"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">SEU SALDO</div><div style="font-size:24px;font-weight:900;color:var(--gold)" id="shopBalance">0 TÂO</div></div><div style="text-align:right"><div class="eyebrow">REPOSIÇÃO DIÁRIA</div><div class="small" id="refreshDate"></div></div></div></div>
+ <div class="notice">O catálogo contém 200 itens. Uma seleção de 20 aparece por dia; os itens comprados concedem pequenos bônus de atributo. A loja renova sua seleção diariamente.</div>
+ <div class="section-head"><h2>OFERTAS DO DIA</h2><span class="hint" id="offerCount">20 ITENS</span></div><div class="shop-grid" id="shopItems"></div>
+</section>
+<div class="footer">BREAK SYSTEM • PROGRESSO SALVO NESTE DISPOSITIVO</div>
+</div>
+<nav class="nav">
+ <button class="active" data-page="break"><b>⌂</b>BREAK</button>
+ <button data-page="limit"><b>◈</b>LIMIT</button>
+ <button data-page="tao"><b>◉</b>TÂO</button>
+ <button data-page="shop"><b>◇</b>LOJA</button>
+</nav>
+<script>
+const MAX=9999999, DAILY=[
+ {name:"Flexões",stat:"Força",reward:3,icon:"✦",desc:"Missão de força"},
+ {name:"Abdominais",stat:"Resistência",reward:3,icon:"⬡",desc:"Missão de resistência"},
+ {name:"Corrida",stat:"Velocidade",reward:3,icon:"➤",desc:"Missão de velocidade"},
+ {name:"Treino de boxe",stat:"Agilidade",reward:3,icon:"✧",desc:"Missão de agilidade"},
+ {name:"Alongamentos e aquecimentos",stat:"Flexibilidade",reward:3,icon:"〰",desc:"Missão de mobilidade"},
+ {name:"Leitura",stat:"Inteligência",reward:3,icon:"▤",desc:"Missão de inteligência"}
+];
+const stats=["Força","Resistência","Velocidade","Agilidade","Flexibilidade","Inteligência"];
+const icons={"Força":"✦","Resistência":"⬡","Velocidade":"➤","Agilidade":"✧","Flexibilidade":"〰","Inteligência":"▤"};
+const names=["Fragmento","Núcleo","Relíquia","Cristal","Selo","Artefato","Essência","Runas","Emblema","Pergaminho"];
+const themes=["do Impacto","da Persistência","do Vento","do Reflexo","da Harmonia","da Sabedoria","do Guardião","da Aurora","do Eclipse","do Viajante","do Foco","da Serenidade","do Despertar","da Ascensão","do Horizonte","da Clareza","da Disciplina","do Equilíbrio","da Centelha","do Infinito"];
+const itemIcons=["🔹","💠","📜","🪬","🔮","✨","🌙","⚙️","🧿","💎"];
+const state=load();
+function load(){try{return Object.assign({stats:Object.fromEntries(["Força","Resistência","Velocidade","Agilidade","Flexibilidade","Inteligência"].map(x=>[x,0])),tao:0,custom:[],completed:{},purchases:[],createdAt:Date.now()},JSON.parse(localStorage.getItem("breakSystemV1")||"{}"))}catch(e){return {stats:Object.fromEntries(stats.map(x=>[x,0])),tao:0,custom:[],completed:{},purchases:[]}}}
+function save(){localStorage.setItem("breakSystemV1",JSON.stringify(state));render()}
+function dateKey(){let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function daySeed(){return Number(dateKey().replaceAll("-",""))}
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function fmt(n){return Math.floor(n).toLocaleString("pt-BR")}
+function total(){return Object.values(state.stats).reduce((a,b)=>a+b,0)}
+function playerLevel(){return Math.floor(total()/10)}
+function addStat(stat,amount){state.stats[stat]=Math.min(MAX,Math.max(0,(state.stats[stat]||0)+amount))}
+function grant(stat,amount){addStat(stat,amount);save()}
+function renderStats(){
+ const el=document.getElementById("statsGrid");
+ el.innerHTML=stats.map(s=>{let v=state.stats[s]||0,p=v/MAX*100;return `<div class="stat"><div class="stat-top"><span class="stat-name">${s.toUpperCase()}</span><span class="stat-icon">${icons[s]}</span></div><div class="stat-value">${fmt(v)}</div><div class="bar"><span style="width:${Math.max(v?0.3:0,Math.min(100,p))}%"></span></div><div class="stat-foot"><span>LEVEL</span><span>${(p).toFixed(4)}%</span></div></div>`}).join("");
+ document.getElementById("playerLevel").textContent="PLAYER LV. "+fmt(playerLevel());
+ let lv=playerLevel(),rank=lv>=1000000?"SSS":lv>=100000?"SS":lv>=10000?"S":lv>=1000?"A":lv>=100?"B":lv>=10?"C":"E";
+ document.getElementById("rank").textContent="RANK "+rank;
+ document.getElementById("summary").textContent=DAILY.filter((m,i)=>state.completed[dateKey()+"_d"+i]).length+" de "+DAILY.length+" missões diárias concluídas hoje.";
+}
+function renderMissions(){
+ document.getElementById("dailyDate").textContent=new Date().toLocaleDateString("pt-BR");
+ document.getElementById("dailyMissions").innerHTML=DAILY.map((m,i)=>{let done=!!state.completed[dateKey()+"_d"+i];return `<div class="mission"><div style="font-size:20px">${m.icon}</div><div class="mission-main"><div class="mission-name">${m.name}</div><div class="mission-meta">${m.desc} • ${m.stat}</div></div><div class="reward">+${m.reward} LV</div><button class="done" data-daily="${i}" ${done?"disabled":""}>${done?"FEITA":"CONCLUIR"}</button></div>`}).join("");
+ document.querySelectorAll("[data-daily]").forEach(b=>b.onclick=()=>{let i=+b.dataset.daily,m=DAILY[i],k=dateKey()+"_d"+i;if(!state.completed[k]){state.completed[k]=true;grant(m.stat,m.reward)}});
+ document.getElementById("customMissions").innerHTML=state.custom.length?state.custom.map((m,i)=>`<div class="mission"><div class="mission-main"><div class="mission-name">${safe(m.name)}</div><div class="mission-meta">${m.stat} • +${m.reward} níveis</div></div><button class="done" data-custom="${i}">CONCLUIR</button><button class="btn danger" data-delete="${i}" aria-label="Excluir">×</button></div>`).join(""):'<div class="empty">Nenhuma missão personalizada criada.</div>';
+ document.querySelectorAll("[data-custom]").forEach(b=>b.onclick=()=>{let m=state.custom[+b.dataset.custom];grant(m.stat,m.reward)});
+ document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>{state.custom.splice(+b.dataset.delete,1);save()});
+}
+function renderTao(){document.getElementById("taoValue").textContent=state.tao;document.getElementById("taoBar").style.width=(state.tao/120*100)+"%"}
+function catalog(){
+ let arr=[];for(let i=0;i<200;i++){let stat=stats[i%6],tier=Math.floor(i/40),bonus=[2,5,10,20,35][tier],price=[5,10,18,30,48][tier]+(i%5)*2;
+ arr.push({id:i,name:names[Math.floor(i/20)]+" "+themes[i%20],stat,bonus,price,icon:itemIcons[i%10],desc:"+"+bonus+" níveis de "+stat.toLowerCase(),tier})}return arr
+}
+const allItems=catalog();
+function offers(){let seed=daySeed(),arr=allItems.slice(),out=[];for(let i=0;i<20;i++){seed=(seed*1664525+1013904223)>>>0;let idx=seed%arr.length;out.push(arr.splice(idx,1)[0])}return out}
+function renderShop(){
+ document.getElementById("shopBalance").textContent=state.tao+" TÂO";document.getElementById("refreshDate").textContent=new Date().toLocaleDateString("pt-BR");let items=offers();
+ document.getElementById("shopItems").innerHTML=items.map(it=>{let bought=state.purchases.includes(dateKey()+"_"+it.id);return `<div class="item"><div class="item-icon">${it.icon}</div><div class="item-name">${it.name}</div><div class="item-desc">${it.desc}</div><div class="item-bottom"><span class="price">${it.price} TÂO</span><button class="done" data-buy="${it.id}" ${bought||state.tao<it.price?"disabled":""}>${bought?"ADQUIRIDO":"COMPRAR"}</button></div></div>`}).join("");
+ document.querySelectorAll("[data-buy]").forEach(b=>b.onclick=()=>{let it=allItems[+b.dataset.buy];if(state.tao>=it.price&&!state.purchases.includes(dateKey()+"_"+it.id)){state.tao-=it.price;addStat(it.stat,it.bonus);state.purchases.push(dateKey()+"_"+it.id);save()}});
+ document.getElementById("offerCount").textContent=items.length+" / 200";
+}
+function render(){renderStats();renderMissions();renderTao();renderShop()}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===b.dataset.page));window.scrollTo(0,0)}));
+document.getElementById("addMission").onclick=()=>{let name=document.getElementById("missionName").value.trim(),stat=document.getElementById("missionStat").value,reward=Math.max(1,Math.min(1000,Number(document.getElementById("missionReward").value)||1));if(!name){alert("Digite o nome da missão.");return}state.custom.push({name,stat,reward});document.getElementById("missionName").value="";save()};
+document.getElementById("taoAdd").onclick=()=>{let n=Math.max(0,Number(document.getElementById("taoAmount").value)||0);state.tao=Math.min(120,state.tao+n);save()};
+document.getElementById("taoRemove").onclick=()=>{let n=Math.max(0,Number(document.getElementById("taoAmount").value)||0);state.tao=Math.max(0,state.tao-n);save()};
+document.getElementById("taoSet").onclick=()=>{let v=Number(document.getElementById("taoExact").value);if(Number.isFinite(v)){state.tao=Math.max(0,Math.min(120,Math.floor(v)));save()}};
+render();
+</script>
+</body></html>

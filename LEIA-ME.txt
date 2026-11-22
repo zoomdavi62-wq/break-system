@@ -1,0 +1,27 @@
+BREAK SYSTEM — Projeto Android offline
+
+CONTEÚDO
+- www/index.html: aplicativo completo em HTML/CSS/JavaScript.
+- capacitor.config.json: configuração do Capacitor.
+- package.json: dependências e comandos.
+
+GERAR APK NO WINDOWS
+1. Instale Node.js 22+ e Android Studio.
+2. Extraia esta pasta.
+3. Abra o CMD nesta pasta.
+4. Execute:
+   npm install
+   npx cap add android
+   npx cap sync
+   npx cap open android
+5. No Android Studio, aguarde a sincronização do Gradle.
+6. Use Build > Build Bundle(s) / APK(s) > Build APK(s).
+
+ATUALIZAR DEPOIS DE EDITAR O HTML
+Execute: npx cap sync
+Depois gere um novo APK no Android Studio.
+
+OFFLINE
+O app utiliza apenas HTML, CSS e JavaScript locais. O progresso fica no localStorage do dispositivo.
+O catálogo tem 200 itens, com 20 ofertas selecionadas por dia. A conclusão de missões diárias é registrada por data local.
+Este é um protótipo inicial: faça backup do progresso antes de desinstalar ou limpar os dados do aplicativo.
