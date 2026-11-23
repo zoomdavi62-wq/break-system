@@ -1,127 +1,475 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#07111f">
-<title>BREAK SYSTEM</title>
-<style>
-:root{--bg:#060c16;--panel:#0b1726;--panel2:#102237;--line:#183650;--cyan:#38d9f5;--blue:#4e8dff;--text:#e8f4ff;--muted:#86a3bb;--gold:#e8c36a;--red:#ff657a;--green:#64e2ae}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(ellipse at 50% -20%,#12314c 0,#07111f 48%,#040811 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
-body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);}.app{max-width:760px;margin:auto;min-height:100vh;padding:18px 15px 100px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}.brand{font-size:12px;letter-spacing:4px;color:var(--cyan);font-weight:900}.subbrand{font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:4px}.level-chip{border:1px solid #246080;background:#0c2031;border-radius:8px;padding:8px 11px;color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:1px}
-.hero{position:relative;overflow:hidden;border:1px solid #1b4a66;background:linear-gradient(135deg,#0e2639,#091522 65%);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 12px 38px #0005}.hero:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #38d9f522;border-radius:50%;right:-80px;top:-100px;box-shadow:0 0 0 20px #38d9f508,0 0 0 42px #38d9f506}.eyebrow{font-size:10px;letter-spacing:3px;color:var(--muted);font-weight:800}.hero h1{font-size:clamp(25px,7vw,38px);letter-spacing:2px;margin:9px 0 5px}.hero p{margin:0;color:var(--muted);font-size:12px}.hero-line{display:flex;justify-content:space-between;align-items:end;gap:12px}.rank{font-size:11px;color:var(--gold);border:1px solid #806b36;padding:6px 9px;border-radius:6px;white-space:nowrap}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:22px 2px 11px}.section-head h2{font-size:13px;letter-spacing:2px;margin:0}.hint{font-size:10px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:linear-gradient(145deg,#0e2032,#091522);border:1px solid var(--line);border-radius:12px;padding:13px;min-width:0}.stat-top{display:flex;justify-content:space-between;align-items:center;gap:5px}.stat-name{font-size:11px;color:#c5d8e8;font-weight:800;letter-spacing:.8px}.stat-icon{font-size:16px}.stat-value{font-size:25px;font-weight:900;margin:9px 0 8px;letter-spacing:.5px}.bar{height:5px;background:#172c40;border-radius:8px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,#2879c9,var(--cyan));border-radius:8px}.stat-foot{display:flex;justify-content:space-between;margin-top:7px;font-size:9px;color:var(--muted)}
-.nav{position:fixed;bottom:0;left:0;right:0;z-index:10;background:#07111fee;backdrop-filter:blur(16px);border-top:1px solid #1b3850;padding:9px max(10px,env(safe-area-inset-right)) calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);max-width:760px;margin:auto}.nav button{background:none;border:0;color:#718da6;font-size:9px;letter-spacing:1px;font-weight:900;padding:6px 2px}.nav button b{display:block;font-size:19px;margin-bottom:4px}.nav button.active{color:var(--cyan)}
-.page{display:none}.page.active{display:block}.panel{background:#0b1726;border:1px solid var(--line);border-radius:13px;padding:15px;margin-bottom:11px}.panel h3{font-size:12px;letter-spacing:1.5px;margin:0 0 12px}.mission{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid #183047}.mission:first-of-type{border-top:0}.mission-main{flex:1;min-width:0}.mission-name{font-size:12px;font-weight:800}.mission-meta{font-size:10px;color:var(--muted);margin-top:4px}.reward{font-size:10px;color:var(--cyan);white-space:nowrap}.done{border:1px solid #276b59;background:#0d2b27;color:var(--green);border-radius:8px;padding:8px 10px;font-size:10px;font-weight:900}.done:disabled{opacity:.55}.btn{border:1px solid #27749a;background:#10334a;color:#dff9ff;border-radius:8px;padding:10px 12px;font-weight:800;font-size:11px}.btn.secondary{border-color:#294257;background:#102033;color:#b9d0e2}.btn.danger{border-color:#754050;background:#351a28;color:#ffb5c0}.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.field{width:100%;background:#071321;border:1px solid #244158;color:var(--text);border-radius:8px;padding:11px;font-size:12px;outline:none}.field:focus{border-color:var(--cyan)}label{display:block;font-size:10px;color:var(--muted);margin:10px 0 6px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.tao-card{background:linear-gradient(145deg,#152b37,#0b1726);border:1px solid #4c6470;border-radius:14px;padding:18px;margin-bottom:12px}.tao-number{font-size:42px;font-weight:950;color:var(--gold);margin:8px 0}.tao-track{height:12px;background:#283643;border-radius:20px;overflow:hidden}.tao-track span{height:100%;display:block;background:linear-gradient(90deg,#c18a36,#f4d887);border-radius:20px}.tao-scale{display:flex;justify-content:space-between;color:var(--muted);font-size:9px;margin-top:7px}.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.item{background:linear-gradient(145deg,#112237,#0a1522);border:1px solid #28445d;border-radius:11px;padding:12px;display:flex;flex-direction:column;gap:7px}.item-icon{font-size:23px}.item-name{font-size:11px;font-weight:900}.item-desc{font-size:10px;color:var(--muted);min-height:26px}.item-bottom{display:flex;justify-content:space-between;align-items:center;gap:5px;margin-top:auto}.price{color:var(--gold);font-size:10px;font-weight:900}.small{font-size:10px;color:var(--muted)}.notice{border:1px solid #314c61;background:#0c1b2a;padding:11px;border-radius:9px;font-size:10px;line-height:1.5;color:#9db6ca;margin-bottom:12px}.empty{text-align:center;padding:24px;color:var(--muted);font-size:12px}.footer{text-align:center;color:#55718a;font-size:9px;letter-spacing:1px;margin-top:25px}
-@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.shop-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-</style>
+  <style>
+    :root {
+      --bg: #10111f;
+      --bg-2: #191a2d;
+      --panel: #202235;
+      --panel-2: #292b40;
+      --panel-soft: rgba(255,255,255,.055);
+      --text: #f4f4fb;
+      --muted: #a6a8bc;
+      --line: rgba(255,255,255,.10);
+      --accent: #a78bfa;
+      --accent-2: #7565d9;
+      --accent-soft: rgba(167,139,250,.15);
+      --good: #72d6ad;
+      --warning: #f3c77b;
+      --danger: #f08b9a;
+      --shadow: 0 18px 50px rgba(0,0,0,.22);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--text);
+      background: radial-gradient(ellipse at 75% 0%, rgba(112,92,183,.16), transparent 34%), var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: -.01em;
+    }
+    body[data-theme="graphite"] { --bg:#111315; --bg-2:#1a1d20; --panel:#202428; --panel-2:#2b3035; --accent:#aab7c4; --accent-2:#728493; --accent-soft:rgba(170,183,196,.15); }
+    body[data-theme="ocean"] { --bg:#0b1722; --bg-2:#102535; --panel:#173044; --panel-2:#1d3c53; --accent:#63c5d8; --accent-2:#378ca7; --accent-soft:rgba(99,197,216,.15); }
+    body[data-theme="emerald"] { --bg:#101b1a; --bg-2:#172a27; --panel:#203632; --panel-2:#2b4740; --accent:#75d7b0; --accent-2:#3d9e7b; --accent-soft:rgba(117,215,176,.15); }
+    body[data-theme="rose"] { --bg:#1d121c; --bg-2:#2a1928; --panel:#372237; --panel-2:#462b44; --accent:#e8a0c4; --accent-2:#b96b98; --accent-soft:rgba(232,160,196,.15); }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .shell { width: min(1160px, 100%); margin: 0 auto; padding: 24px 24px 112px; }
+    .topline { display:flex; align-items:center; gap:14px; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.18em; }
+    .topline::after { content:""; height:1px; flex:1; background:var(--line); }
+    .serial { width:34px; height:34px; border:1px solid var(--accent); color:var(--accent); border-radius:50%; display:grid; place-items:center; font-size:11px; letter-spacing:0; }
+    .hero { display:flex; justify-content:space-between; gap:24px; align-items:flex-end; padding:30px 0 24px; }
+    .eyebrow { color:var(--accent); font-size:11px; text-transform:uppercase; letter-spacing:.18em; font-weight:800; }
+    h1 { font-size:clamp(34px,6vw,58px); line-height:1; margin:10px 0 8px; letter-spacing:-.055em; }
+    .hero p { margin:0; max-width:440px; color:var(--muted); font-size:13px; line-height:1.6; border-left:2px solid var(--accent); padding-left:14px; }
+    .system-chip { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); background:var(--panel-soft); padding:9px 12px; border-radius:999px; color:var(--muted); font-size:11px; white-space:nowrap; }
+    .system-dot { width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 12px var(--good); }
+    .nav { display:flex; gap:8px; padding:8px; background:rgba(255,255,255,.035); border:1px solid var(--line); border-radius:18px; position:sticky; top:10px; z-index:20; backdrop-filter:blur(16px); }
+    .nav button { flex:1; border:0; background:transparent; border-radius:12px; color:var(--muted); padding:12px 10px; display:flex; justify-content:center; align-items:center; gap:9px; font-size:12px; font-weight:700; transition:.2s; }
+    .nav button.active { color:var(--text); background:var(--accent-soft); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent); }
+    .nav .ico { font-size:16px; }
+    main { padding-top:22px; }
+    .section-head { display:flex; justify-content:space-between; align-items:flex-end; gap:18px; margin:8px 0 18px; }
+    .section-head h2 { font-size:25px; letter-spacing:-.04em; margin:0 0 5px; }
+    .section-head p { color:var(--muted); font-size:12px; margin:0; line-height:1.5; }
+    .grid { display:grid; gap:16px; }
+    .grid.two { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .grid.three { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .panel { background:linear-gradient(145deg, var(--panel), color-mix(in srgb,var(--panel) 80%,var(--bg))); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); min-width:0; }
+    .panel.light { background:linear-gradient(145deg, #f0f0f3, #dfe0e5); color:#23242b; border-color:rgba(0,0,0,.05); }
+    .panel.light .muted, .panel.light .hint { color:#6c6e78; }
+    .panel-title { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:15px; }
+    .panel-title h3 { font-size:14px; margin:0; letter-spacing:-.02em; }
+    .muted { color:var(--muted); }
+    .hint { color:var(--muted); font-size:11px; line-height:1.5; }
+    .big-number { font-size:clamp(32px,5vw,46px); letter-spacing:-.06em; font-weight:800; line-height:1; }
+    .tao-panel { display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .tao-panel .big-number { margin:7px 0 12px; }
+    .tao-controls { min-width:120px; text-align:right; }
+    .progress { height:9px; border-radius:99px; background:rgba(255,255,255,.09); overflow:hidden; }
+    .progress > span { display:block; height:100%; background:linear-gradient(90deg,var(--accent-2),var(--accent)); border-radius:99px; transition:width .25s; }
+    .light .progress { background:rgba(0,0,0,.10); }
+    .light .progress > span { background:#24252b; }
+    .small-row { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:11px; color:var(--muted); margin-top:8px; }
+    .stat-list { display:grid; gap:13px; }
+    .stat-row { display:grid; grid-template-columns:52px minmax(0,1fr) 110px; gap:12px; align-items:center; }
+    .stat-code { color:var(--accent); font-weight:900; font-size:13px; letter-spacing:.04em; }
+    .stat-name { font-size:12px; font-weight:700; }
+    .stat-desc { color:var(--muted); font-size:10px; margin-top:3px; }
+    .stat-track { margin-top:7px; height:5px; border-radius:9px; background:rgba(255,255,255,.08); overflow:hidden; }
+    .stat-track span { display:block;height:100%;background:var(--accent);border-radius:9px; }
+    .stat-value { display:flex; align-items:center; justify-content:flex-end; gap:5px; }
+    .stat-value input { width:48px; text-align:center; border:1px solid var(--line); border-radius:9px; background:var(--panel-2); color:var(--text); padding:7px 3px; font-size:13px; font-weight:800; }
+    .mini-btn { width:27px; height:27px; border-radius:8px; border:1px solid var(--line); background:var(--panel-soft); color:var(--text); font-weight:800; }
+    .mini-btn:hover, .btn:hover { filter:brightness(1.12); transform:translateY(-1px); }
+    .btn { border:0; border-radius:12px; background:var(--accent); color:#171522; font-weight:800; padding:11px 15px; font-size:12px; transition:.18s; }
+    .btn.secondary { background:var(--panel-2); color:var(--text); border:1px solid var(--line); }
+    .btn.ghost { background:transparent; border:1px solid var(--line); color:var(--muted); }
+    .btn.danger { background:rgba(240,139,154,.14); border:1px solid rgba(240,139,154,.25); color:#ffb7c0; }
+    .btn:disabled { opacity:.42; cursor:not-allowed; transform:none; }
+    .btn.small { padding:8px 11px; font-size:11px; border-radius:10px; }
+    .pill { display:inline-flex; align-items:center; gap:6px; padding:6px 9px; border-radius:99px; background:var(--accent-soft); color:var(--accent); font-size:10px; font-weight:800; letter-spacing:.03em; }
+    .stat-note-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:18px; }
+    .mini-stat { background:var(--panel-soft); border:1px solid var(--line); padding:12px; border-radius:14px; }
+    .mini-stat strong { display:block;font-size:20px;letter-spacing:-.04em; }
+    .mini-stat span { color:var(--muted);font-size:10px; }
+    .cards-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px; }
+    .card-item { position:relative;overflow:hidden;min-width:0;background:linear-gradient(150deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:17px;padding:15px; }
+    .card-item::before { content:"";position:absolute;right:-28px;top:-35px;width:100px;height:100px;border-radius:50%;background:var(--rarity-color);opacity:.10;filter:blur(2px); }
+    .card-top { display:flex;justify-content:space-between;align-items:center;gap:8px;position:relative; }
+    .rarity { color:var(--rarity-color);font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.11em; }
+    .points { border:1px solid var(--line);border-radius:99px;padding:5px 7px;font-size:10px;font-weight:900;white-space:nowrap; }
+    .card-item h3 { font-size:15px;margin:13px 0 6px;line-height:1.2;position:relative; }
+    .card-item p { color:var(--muted);font-size:11px;line-height:1.5;min-height:34px;margin:0 0 12px;position:relative; }
+    .bonus-list { display:flex;gap:5px;flex-wrap:wrap;margin-bottom:13px;position:relative; }
+    .bonus { border-radius:7px;background:var(--accent-soft);color:var(--text);padding:5px 7px;font-size:10px;font-weight:800; }
+    .card-actions { display:flex;gap:7px;position:relative; }
+    .card-actions .btn { flex:1; }
+    .filter-row { display:flex;gap:8px;flex-wrap:wrap;align-items:center; }
+    .filter-row select, .field input, .field textarea, .field select, .import-label { border:1px solid var(--line);background:var(--panel-2);color:var(--text);border-radius:11px;padding:11px 12px;width:100%;font-size:12px; }
+    .field label { display:block;color:var(--muted);font-size:11px;font-weight:700;margin-bottom:7px; }
+    .field textarea { resize:vertical;min-height:76px;line-height:1.5; }
+    .field { min-width:0; }
+    .form-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+    .form-grid .full { grid-column:1/-1; }
+    .empty { padding:30px 15px;text-align:center;border:1px dashed var(--line);border-radius:16px;color:var(--muted);font-size:12px;line-height:1.6; }
+    .mission-list { display:grid;gap:10px; }
+    .mission { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border:1px solid var(--line);background:var(--panel-soft);border-radius:15px; }
+    .mission.done { opacity:.65; }
+    .mission h4 { margin:0 0 4px;font-size:13px; }
+    .mission p { margin:0;color:var(--muted);font-size:11px;line-height:1.4; }
+    .mission-reward { color:var(--good);font-size:11px;font-weight:900;white-space:nowrap; }
+    .week-grid { display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px; }
+    .day { border:1px solid var(--line);background:var(--panel-soft);border-radius:13px;padding:12px 4px;text-align:center;color:var(--muted); }
+    .day .day-name { font-size:10px;font-weight:800; }
+    .day .day-date { font-size:9px;opacity:.7;margin:4px 0 8px; }
+    .day button { border:0;border-radius:50%;width:32px;height:32px;background:var(--panel-2);color:var(--muted);font-size:17px; }
+    .day.active { border-color:color-mix(in srgb,var(--accent) 55%, transparent);background:var(--accent-soft);color:var(--text); }
+    .day.active button { background:var(--accent);color:#1b1728;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 32%,transparent); }
+    .theme-grid { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px; }
+    .theme-option { border:1px solid var(--line);background:var(--panel-soft);border-radius:14px;padding:10px;color:var(--text);text-align:left; }
+    .theme-option.selected { border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft); }
+    .theme-swatch { height:35px;border-radius:8px;margin-bottom:8px; }
+    .theme-option span { font-size:11px;font-weight:800; }
+    .settings-actions { display:flex;gap:8px;flex-wrap:wrap; }
+    .file-input { display:none; }
+    .sound-row { display:flex;align-items:center;gap:12px;flex-wrap:wrap; }
+    .sound-name { color:var(--muted);font-size:11px;flex:1;min-width:100px; }
+    .toast { position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#f4f4fb;color:#1c1c26;padding:12px 17px;border-radius:12px;box-shadow:0 12px 35px #0005;font-size:12px;font-weight:800;z-index:100;transition:.25s;max-width:calc(100% - 30px);text-align:center; }
+    .toast.show { opacity:1;transform:translate(-50%,0); }
+    .footer-note { color:var(--muted);font-size:10px;text-align:center;margin:24px 0 0;line-height:1.5; }
+    .hidden { display:none !important; }
+    @media (max-width:850px) { .cards-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .grid.three { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:620px) {
+      .shell { padding:17px 14px 100px; }
+      .hero { padding:24px 0 20px;align-items:flex-start;flex-direction:column;gap:13px; }
+      .hero p { max-width:100%; }
+      .system-chip { align-self:flex-start; }
+      .nav { position:fixed;top:auto;bottom:max(10px,env(safe-area-inset-bottom));left:10px;right:10px;padding:6px;border-radius:17px;box-shadow:0 12px 40px #0008;background:rgba(24,25,42,.94); }
+      .nav button { flex-direction:column;gap:3px;padding:8px 3px;font-size:9px; }
+      .nav .ico { font-size:16px; }
+      main { padding-top:15px; }
+      .grid.two,.grid.three { grid-template-columns:1fr; }
+      .panel { padding:16px;border-radius:18px; }
+      .section-head h2 { font-size:22px; }
+      .tao-panel { align-items:flex-start;flex-direction:column; }
+      .tao-controls { text-align:left;display:flex;align-items:center;gap:8px; }
+      .stat-row { grid-template-columns:42px minmax(0,1fr) 100px;gap:8px; }
+      .stat-value input { width:43px; }
+      .cards-grid { grid-template-columns:1fr; }
+      .week-grid { gap:4px; }
+      .day { padding:9px 2px;border-radius:10px; }
+      .day .day-name { font-size:9px; }
+      .day button { width:27px;height:27px;font-size:15px; }
+      .theme-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .form-grid { grid-template-columns:1fr; }
+      .form-grid .full { grid-column:auto; }
+      .mission { align-items:flex-start;flex-direction:column; }
+      .mission .card-actions { width:100%; }
+    }
+  </style>
 </head>
-<body>
-<div class="app">
-<header class="top"><div><div class="brand">BREAK // SYSTEM</div><div class="subbrand">PERSONAL GROWTH INTERFACE</div></div><div class="level-chip" id="playerLevel">PLAYER LV. 0</div></header>
+<body data-theme="midnight">
+  <div class="shell">
+    <div class="topline"><span>BREAK / SYSTEM INTERFACE</span><span class="serial">01</span></div>
+    <header class="hero">
+      <div><div class="eyebrow">Personal evolution protocol</div><h1>BREAK System</h1><p>Organize sua evolução, registre missões e transforme suas cartas em atributos. Seu progresso, suas regras.</p></div>
+      <div class="system-chip"><span class="system-dot"></span> SISTEMA ONLINE <span id="todayLabel"></span></div>
+    </header>
+    <nav class="nav" aria-label="Navegação principal">
+      <button class="active" data-tab="status"><span class="ico">◈</span><span>Status</span></button>
+      <button data-tab="cards"><span class="ico">▣</span><span>Cartas</span></button>
+      <button data-tab="shop"><span class="ico">⌘</span><span>Mercado</span></button>
+      <button data-tab="missions"><span class="ico">☷</span><span>Missões</span></button>
+      <button data-tab="settings"><span class="ico">⚙</span><span>Ajustes</span></button>
+    </nav>
+    <main id="content" aria-live="polite"></main>
+    <p class="footer-note">BREAK SYSTEM · Seus dados ficam salvos neste aparelho. Exporte um backup nas configurações para não perder seu progresso.</p>
+  </div>
+  <audio id="backgroundAudio" loop></audio>
+  <div class="toast" id="toast" role="status"></div>
 
-<section id="break" class="page active">
- <div class="hero"><div class="eyebrow">JANELA PRINCIPAL // STATUS</div><div class="hero-line"><div><h1>BREAK</h1><p>Seu progresso começa com constância.</p></div><div class="rank" id="rank">RANK E</div></div></div>
- <div class="section-head"><h2>ATRIBUTOS</h2><span class="hint">NÍVEL 0 — 9.999.999</span></div>
- <div class="grid" id="statsGrid"></div>
- <div class="panel" style="margin-top:13px"><h3>REGISTRO DO SISTEMA</h3><div class="small" id="summary">Nenhuma missão concluída hoje.</div></div>
-</section>
-
-<section id="limit" class="page">
- <div class="hero"><div class="eyebrow">JANELA DE OBJETIVOS</div><h1>LIMIT</h1><p>Missões diárias e desafios criados por você.</p></div>
- <div class="notice">Conclua uma missão quando realmente a tiver realizado. Os exercícios são registros de rotina, não uma obrigação de treinar além dos seus limites. Descanse quando precisar.</div>
- <div class="panel"><div class="section-head" style="margin:0 0 8px"><h2>MISSÕES DIÁRIAS</h2><span class="hint" id="dailyDate"></span></div><div id="dailyMissions"></div></div>
- <div class="panel"><h3>CRIAR MISSÃO PERSONALIZADA</h3>
-  <label for="missionName">Nome da missão</label><input class="field" id="missionName" maxlength="48" placeholder="Ex.: Praticar um novo movimento">
-  <div class="form-grid"><div><label for="missionStat">Atributo aumentado</label><select class="field" id="missionStat"><option>Força</option><option>Resistência</option><option>Velocidade</option><option>Agilidade</option><option>Flexibilidade</option><option>Inteligência</option></select></div><div><label for="missionReward">Recompensa (níveis)</label><input class="field" id="missionReward" type="number" min="1" max="1000" value="5"></div></div>
-  <button class="btn" style="margin-top:12px;width:100%" id="addMission">+ ADICIONAR MISSÃO</button>
- </div>
- <div class="panel"><h3>MINHAS MISSÕES</h3><div id="customMissions"><div class="empty">Nenhuma missão personalizada criada.</div></div></div>
-</section>
-
-<section id="tao" class="page">
- <div class="hero"><div class="eyebrow">JANELA DE EQUILÍBRIO</div><h1>TÂO</h1><p>Gerencie seus pontos de equilíbrio.</p></div>
- <div class="tao-card"><div class="eyebrow">RESERVA DE TÂO</div><div class="tao-number"><span id="taoValue">0</span><span style="font-size:16px;color:#c7b68e"> / 120</span></div><div class="tao-track"><span id="taoBar" style="width:0%"></span></div><div class="tao-scale"><span>0</span><span>100 // LIMITE BASE</span><span>120 // EXTRA</span></div></div>
- <div class="panel"><h3>AJUSTE MANUAL</h3><label for="taoAmount">Quantidade de pontos</label><input class="field" id="taoAmount" type="number" min="1" max="120" value="5"><div class="row" style="margin-top:10px"><button class="btn" style="flex:1" id="taoAdd">+ AUMENTAR</button><button class="btn danger" style="flex:1" id="taoRemove">− DIMINUIR</button></div><label for="taoExact">Definir valor exato</label><div class="row"><input class="field" id="taoExact" type="number" min="0" max="120" placeholder="0 a 120"><button class="btn secondary" id="taoSet">DEFINIR</button></div></div>
- <div class="notice">O Tâo é um recurso fictício de organização pessoal. Meditação e pausas podem ser registradas como hábitos, mas os pontos são ajustados manualmente por você. Não há punição automática por estresse.</div>
-</section>
-
-<section id="shop" class="page">
- <div class="hero"><div class="eyebrow">MERCADO DO SISTEMA</div><h1>LOJA</h1><p>Itens de evolução comprados com Tâo.</p></div>
- <div class="panel"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">SEU SALDO</div><div style="font-size:24px;font-weight:900;color:var(--gold)" id="shopBalance">0 TÂO</div></div><div style="text-align:right"><div class="eyebrow">REPOSIÇÃO DIÁRIA</div><div class="small" id="refreshDate"></div></div></div></div>
- <div class="notice">O catálogo contém 200 itens. Uma seleção de 20 aparece por dia; os itens comprados concedem pequenos bônus de atributo. A loja renova sua seleção diariamente.</div>
- <div class="section-head"><h2>OFERTAS DO DIA</h2><span class="hint" id="offerCount">20 ITENS</span></div><div class="shop-grid" id="shopItems"></div>
-</section>
-<div class="footer">BREAK SYSTEM • PROGRESSO SALVO NESTE DISPOSITIVO</div>
-</div>
-<nav class="nav">
- <button class="active" data-page="break"><b>⌂</b>BREAK</button>
- <button data-page="limit"><b>◈</b>LIMIT</button>
- <button data-page="tao"><b>◉</b>TÂO</button>
- <button data-page="shop"><b>◇</b>LOJA</button>
-</nav>
 <script>
-const MAX=9999999, DAILY=[
- {name:"Flexões",stat:"Força",reward:3,icon:"✦",desc:"Missão de força"},
- {name:"Abdominais",stat:"Resistência",reward:3,icon:"⬡",desc:"Missão de resistência"},
- {name:"Corrida",stat:"Velocidade",reward:3,icon:"➤",desc:"Missão de velocidade"},
- {name:"Treino de boxe",stat:"Agilidade",reward:3,icon:"✧",desc:"Missão de agilidade"},
- {name:"Alongamentos e aquecimentos",stat:"Flexibilidade",reward:3,icon:"〰",desc:"Missão de mobilidade"},
- {name:"Leitura",stat:"Inteligência",reward:3,icon:"▤",desc:"Missão de inteligência"}
-];
-const stats=["Força","Resistência","Velocidade","Agilidade","Flexibilidade","Inteligência"];
-const icons={"Força":"✦","Resistência":"⬡","Velocidade":"➤","Agilidade":"✧","Flexibilidade":"〰","Inteligência":"▤"};
-const names=["Fragmento","Núcleo","Relíquia","Cristal","Selo","Artefato","Essência","Runas","Emblema","Pergaminho"];
-const themes=["do Impacto","da Persistência","do Vento","do Reflexo","da Harmonia","da Sabedoria","do Guardião","da Aurora","do Eclipse","do Viajante","do Foco","da Serenidade","do Despertar","da Ascensão","do Horizonte","da Clareza","da Disciplina","do Equilíbrio","da Centelha","do Infinito"];
-const itemIcons=["🔹","💠","📜","🪬","🔮","✨","🌙","⚙️","🧿","💎"];
-const state=load();
-function load(){try{return Object.assign({stats:Object.fromEntries(["Força","Resistência","Velocidade","Agilidade","Flexibilidade","Inteligência"].map(x=>[x,0])),tao:0,custom:[],completed:{},purchases:[],createdAt:Date.now()},JSON.parse(localStorage.getItem("breakSystemV1")||"{}"))}catch(e){return {stats:Object.fromEntries(stats.map(x=>[x,0])),tao:0,custom:[],completed:{},purchases:[]}}}
-function save(){localStorage.setItem("breakSystemV1",JSON.stringify(state));render()}
-function dateKey(){let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
-function daySeed(){return Number(dateKey().replaceAll("-",""))}
-function safe(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function fmt(n){return Math.floor(n).toLocaleString("pt-BR")}
-function total(){return Object.values(state.stats).reduce((a,b)=>a+b,0)}
-function playerLevel(){return Math.floor(total()/10)}
-function addStat(stat,amount){state.stats[stat]=Math.min(MAX,Math.max(0,(state.stats[stat]||0)+amount))}
-function grant(stat,amount){addStat(stat,amount);save()}
-function renderStats(){
- const el=document.getElementById("statsGrid");
- el.innerHTML=stats.map(s=>{let v=state.stats[s]||0,p=v/MAX*100;return `<div class="stat"><div class="stat-top"><span class="stat-name">${s.toUpperCase()}</span><span class="stat-icon">${icons[s]}</span></div><div class="stat-value">${fmt(v)}</div><div class="bar"><span style="width:${Math.max(v?0.3:0,Math.min(100,p))}%"></span></div><div class="stat-foot"><span>LEVEL</span><span>${(p).toFixed(4)}%</span></div></div>`}).join("");
- document.getElementById("playerLevel").textContent="PLAYER LV. "+fmt(playerLevel());
- let lv=playerLevel(),rank=lv>=1000000?"SSS":lv>=100000?"SS":lv>=10000?"S":lv>=1000?"A":lv>=100?"B":lv>=10?"C":"E";
- document.getElementById("rank").textContent="RANK "+rank;
- document.getElementById("summary").textContent=DAILY.filter((m,i)=>state.completed[dateKey()+"_d"+i]).length+" de "+DAILY.length+" missões diárias concluídas hoje.";
-}
-function renderMissions(){
- document.getElementById("dailyDate").textContent=new Date().toLocaleDateString("pt-BR");
- document.getElementById("dailyMissions").innerHTML=DAILY.map((m,i)=>{let done=!!state.completed[dateKey()+"_d"+i];return `<div class="mission"><div style="font-size:20px">${m.icon}</div><div class="mission-main"><div class="mission-name">${m.name}</div><div class="mission-meta">${m.desc} • ${m.stat}</div></div><div class="reward">+${m.reward} LV</div><button class="done" data-daily="${i}" ${done?"disabled":""}>${done?"FEITA":"CONCLUIR"}</button></div>`}).join("");
- document.querySelectorAll("[data-daily]").forEach(b=>b.onclick=()=>{let i=+b.dataset.daily,m=DAILY[i],k=dateKey()+"_d"+i;if(!state.completed[k]){state.completed[k]=true;grant(m.stat,m.reward)}});
- document.getElementById("customMissions").innerHTML=state.custom.length?state.custom.map((m,i)=>`<div class="mission"><div class="mission-main"><div class="mission-name">${safe(m.name)}</div><div class="mission-meta">${m.stat} • +${m.reward} níveis</div></div><button class="done" data-custom="${i}">CONCLUIR</button><button class="btn danger" data-delete="${i}" aria-label="Excluir">×</button></div>`).join(""):'<div class="empty">Nenhuma missão personalizada criada.</div>';
- document.querySelectorAll("[data-custom]").forEach(b=>b.onclick=()=>{let m=state.custom[+b.dataset.custom];grant(m.stat,m.reward)});
- document.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>{state.custom.splice(+b.dataset.delete,1);save()});
-}
-function renderTao(){document.getElementById("taoValue").textContent=state.tao;document.getElementById("taoBar").style.width=(state.tao/120*100)+"%"}
-function catalog(){
- let arr=[];for(let i=0;i<200;i++){let stat=stats[i%6],tier=Math.floor(i/40),bonus=[2,5,10,20,35][tier],price=[5,10,18,30,48][tier]+(i%5)*2;
- arr.push({id:i,name:names[Math.floor(i/20)]+" "+themes[i%20],stat,bonus,price,icon:itemIcons[i%10],desc:"+"+bonus+" níveis de "+stat.toLowerCase(),tier})}return arr
-}
-const allItems=catalog();
-function offers(){let seed=daySeed(),arr=allItems.slice(),out=[];for(let i=0;i<20;i++){seed=(seed*1664525+1013904223)>>>0;let idx=seed%arr.length;out.push(arr.splice(idx,1)[0])}return out}
-function renderShop(){
- document.getElementById("shopBalance").textContent=state.tao+" TÂO";document.getElementById("refreshDate").textContent=new Date().toLocaleDateString("pt-BR");let items=offers();
- document.getElementById("shopItems").innerHTML=items.map(it=>{let bought=state.purchases.includes(dateKey()+"_"+it.id);return `<div class="item"><div class="item-icon">${it.icon}</div><div class="item-name">${it.name}</div><div class="item-desc">${it.desc}</div><div class="item-bottom"><span class="price">${it.price} TÂO</span><button class="done" data-buy="${it.id}" ${bought||state.tao<it.price?"disabled":""}>${bought?"ADQUIRIDO":"COMPRAR"}</button></div></div>`}).join("");
- document.querySelectorAll("[data-buy]").forEach(b=>b.onclick=()=>{let it=allItems[+b.dataset.buy];if(state.tao>=it.price&&!state.purchases.includes(dateKey()+"_"+it.id)){state.tao-=it.price;addStat(it.stat,it.bonus);state.purchases.push(dateKey()+"_"+it.id);save()}});
- document.getElementById("offerCount").textContent=items.length+" / 200";
-}
-function render(){renderStats();renderMissions();renderTao();renderShop()}
-document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===b.dataset.page));window.scrollTo(0,0)}));
-document.getElementById("addMission").onclick=()=>{let name=document.getElementById("missionName").value.trim(),stat=document.getElementById("missionStat").value,reward=Math.max(1,Math.min(1000,Number(document.getElementById("missionReward").value)||1));if(!name){alert("Digite o nome da missão.");return}state.custom.push({name,stat,reward});document.getElementById("missionName").value="";save()};
-document.getElementById("taoAdd").onclick=()=>{let n=Math.max(0,Number(document.getElementById("taoAmount").value)||0);state.tao=Math.min(120,state.tao+n);save()};
-document.getElementById("taoRemove").onclick=()=>{let n=Math.max(0,Number(document.getElementById("taoAmount").value)||0);state.tao=Math.max(0,state.tao-n);save()};
-document.getElementById("taoSet").onclick=()=>{let v=Number(document.getElementById("taoExact").value);if(Number.isFinite(v)){state.tao=Math.max(0,Math.min(120,Math.floor(v)));save()}};
-render();
+(() => {
+  'use strict';
+
+  const SAVE_KEY = 'break-system-evolution-v1';
+  const MAX_INVENTORY = 500;
+  const CATALOG_SIZE = 1200;
+  const STAT_INFO = {
+    FOR: { name: 'Força', desc: 'Capacidade de produzir força.' },
+    RES: { name: 'Resistência', desc: 'Capacidade de sustentar esforços.' },
+    VEL: { name: 'Velocidade', desc: 'Rapidez de movimento e reação.' },
+    TEC: { name: 'Técnica', desc: 'Precisão e domínio dos movimentos.' },
+    MEN: { name: 'Mental', desc: 'Percepção, foco e autonomia.' },
+    DIS: { name: 'Disciplina', desc: 'Consistência, evolução e organização.' }
+  };
+  const STAT_KEYS = Object.keys(STAT_INFO);
+  const RARITIES = [
+    { name:'Comum I', roman:'I', min:1, max:2, color:'#aeb7c4', weight:250 },
+    { name:'Incomum II', roman:'II', min:1, max:3, color:'#72c9a5', weight:210 },
+    { name:'Rara III', roman:'III', min:1, max:4, color:'#70a9ed', weight:170 },
+    { name:'Épica IV', roman:'IV', min:1, max:5, color:'#b28af0', weight:140 },
+    { name:'Lendária V', roman:'V', min:5, max:5, color:'#e8b96c', weight:110 },
+    { name:'Mítica VI', roman:'VI', min:5, max:6, color:'#ef8dad', weight:85 },
+    { name:'Divina VII', roman:'VII', min:5, max:8, color:'#75d6df', weight:60 },
+    { name:'Imortal VIII', roman:'VIII', min:10, max:10, color:'#f08c69', weight:45 },
+    { name:'Primordial IX', roman:'IX', min:10, max:15, color:'#d6a2f2', weight:32 },
+    { name:'Cósmica X', roman:'X', min:15, max:18, color:'#8da2ff', weight:23 },
+    { name:'Multiversal XI', roman:'XI', min:20, max:20, color:'#f1d37c', weight:16 },
+    { name:'Transcendente XII', roman:'XII', min:20, max:35, color:'#f19ec9', weight:11 },
+    { name:'Infinita XIII', roman:'XIII', min:35, max:45, color:'#ffffff', weight:8 }
+  ];
+  const NAME_A = ['Eco','Véu','Pulso','Núcleo','Órbita','Aurora','Ruptura','Prisma','Ímpeto','Código','Vértice','Legado','Eclipse','Ascensão','Destino','Orbe','Fluxo','Selo','Chama','Horizonte','Limiar','Origem','Fenda','Alvorada','Íris','Síntese','Colosso','Cometa','Espectro','Fôlego'];
+  const NAME_B = ['do Guardião','de Aço','Silencioso','da Aurora','do Errante','Abissal','do Primeiro Sol','Inabalável','Celeste','do Viajante','de Cristal','Primário','do Equilíbrio','Radiante','do Crepúsculo','Supremo','do Caminho','Estelar','da Disciplina','do Infinito','da Tempestade','Ancestral','da Vontade','da Harmonia','Oculto','do Despertar'];
+  const DESCRIPTION = [
+    'Uma energia condensada que fortalece sua jornada com progresso constante.',
+    'Um registro raro de evolução. Seu poder cresce quando você decide utilizá-lo.',
+    'Fragmentos de potencial reunidos em uma única carta de aprimoramento.',
+    'Uma descoberta do sistema que converte potencial em atributos permanentes.',
+    'Uma carta criada para representar foco, prática e evolução ao longo do caminho.',
+    'Uma fonte de poder que pode ser incorporada aos seus atributos.'
+  ];
+
+  function mulberry32(a) { return function() { let t = a += 0x6D2B79F5; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function randomInt(min,max,rng=Math.random) { return Math.floor(rng()*(max-min+1))+min; }
+  function pick(arr,rng=Math.random) { return arr[Math.floor(rng()*arr.length)]; }
+  function weightedRarity(rng) { const total=RARITIES.reduce((s,r)=>s+r.weight,0); let n=rng()*total; for(const r of RARITIES){n-=r.weight;if(n<=0)return r;} return RARITIES[0]; }
+  function distributePoints(total,rng) {
+    const keys=[...STAT_KEYS].sort(()=>rng()-.5);
+    const count=Math.min(total, randomInt(1, Math.min(3,STAT_KEYS.length),rng));
+    const chosen=keys.slice(0,count); const result={};
+    chosen.forEach(k=>result[k]=0);
+    for(let i=0;i<total;i++) result[chosen[i%count]]++;
+    return Object.fromEntries(Object.entries(result).filter(([,v])=>v>0));
+  }
+  function buildCatalog() {
+    const rng=mulberry32(8262026);
+    const catalog=[];
+    // Garante que todas as raridades apareçam no catálogo e mantém distribuição ponderada no restante.
+    const forced=[...RARITIES];
+    for(let i=0;i<CATALOG_SIZE;i++) {
+      const rarity=i<forced.length?forced[i]:weightedRarity(rng);
+      const points=randomInt(rarity.min,rarity.max,rng);
+      const a=NAME_A[i%NAME_A.length], b=NAME_B[Math.floor(i/NAME_A.length)%NAME_B.length];
+      const suffix=String(i+1).padStart(4,'0');
+      const stats=distributePoints(points,rng);
+      const attrs=Object.entries(stats).map(([k,v])=>`${k} +${v}`).join(' · ');
+      catalog.push({id:`card-${suffix}`,name:`${a} ${b} ${suffix}`,rarity:rarity.name,rarityIndex:RARITIES.indexOf(rarity),points,stats,description:`${pick(DESCRIPTION,rng)} ${attrs}.`,cost:0});
+    }
+    return catalog;
+  }
+  const CATALOG=buildCatalog();
+  const catalogMap=new Map(CATALOG.map(c=>[c.id,c]));
+
+  function defaultState() {
+    return {
+      stats:{FOR:0,RES:0,VEL:0,TEC:0,MEN:0,DIS:0}, tao:100,
+      inventory:[], purchasedIds:[], missions:[],
+      streak:{weekKey:getWeekKey(new Date()),days:[false,false,false,false,false,false,false]},
+      settings:{theme:'midnight',volume:0.25,musicName:''},
+      shop:{offerIds:[],nextRefreshAt:0}
+    };
+  }
+  function loadState() {
+    try {
+      const saved=JSON.parse(localStorage.getItem(SAVE_KEY));
+      if(!saved) return defaultState();
+      const base=defaultState();
+      return {
+        ...base,...saved,
+        stats:{...base.stats,...(saved.stats||{})},
+        settings:{...base.settings,...(saved.settings||{})},
+        streak:{...base.streak,...(saved.streak||{})},
+        shop:{...base.shop,...(saved.shop||{})},
+        inventory:Array.isArray(saved.inventory)?saved.inventory:[],
+        purchasedIds:Array.isArray(saved.purchasedIds)?saved.purchasedIds:[],
+        missions:Array.isArray(saved.missions)?saved.missions:[]
+      };
+    } catch(e) { console.warn('Não foi possível ler o salvamento:',e); return defaultState(); }
+  }
+  let state=loadState();
+  let activeTab='status';
+  let currentFilter='Todas';
+  let toastTimer=null;
+  const content=document.getElementById('content');
+  const audio=document.getElementById('backgroundAudio');
+  const toastEl=document.getElementById('toast');
+
+  function save() { try { localStorage.setItem(SAVE_KEY,JSON.stringify(state)); } catch(e) { showToast('Armazenamento cheio. Exporte um backup e remova arquivos antigos.'); } }
+  function escapeHTML(value) { return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function showToast(message) { toastEl.textContent=message;toastEl.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove('show'),2500); }
+  function formatNumber(n) { return new Intl.NumberFormat('pt-BR').format(n); }
+  function getWeekKey(date) { const d=new Date(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate())); const day=d.getUTCDay()||7; d.setUTCDate(d.getUTCDate()+4-day); const yearStart=new Date(Date.UTC(d.getUTCFullYear(),0,1)); const week=Math.ceil((((d-yearStart)/86400000)+1)/7); return `${d.getUTCFullYear()}-W${String(week).padStart(2,'0')}`; }
+  function ensureCurrentWeek() { const key=getWeekKey(new Date());if(state.streak.weekKey!==key){state.streak={weekKey:key,days:[false,false,false,false,false,false,false]};save();} }
+  function applyTheme() { document.body.dataset.theme=state.settings.theme||'midnight'; }
+  function rarityColor(name) { return RARITIES.find(r=>r.name===name)?.color||'#aaa'; }
+  function costFor(card) { return Math.round(card.points*7+(card.rarityIndex+1)*9); }
+  function statTotal() { return STAT_KEYS.reduce((s,k)=>s+(Number(state.stats[k])||0),0); }
+  function updateTao(amount) { state.tao=Math.max(0,Math.min(1000,Math.round(state.tao+amount)));save(); }
+  function getOffers() { return state.shop.offerIds.map(id=>catalogMap.get(id)).filter(Boolean); }
+  function refreshShop() {
+    const already=new Set(state.purchasedIds);
+    const available=CATALOG.filter(c=>!already.has(c.id));
+    const shuffled=[...available].sort(()=>Math.random()-.5);
+    state.shop.offerIds=shuffled.slice(0,Math.min(12,shuffled.length)).map(c=>c.id);
+    state.shop.nextRefreshAt=Date.now()+randomInt(12,35)*60*1000;
+    save();
+  }
+  function ensureShop() { if(!Array.isArray(state.shop.offerIds)||!state.shop.offerIds.length||!state.shop.nextRefreshAt||Date.now()>=state.shop.nextRefreshAt) refreshShop(); }
+  function cardMarkup(card,mode='inventory') {
+    const colors=rarityColor(card.rarity);
+    const bonuses=Object.entries(card.stats||{}).map(([k,v])=>`<span class="bonus">${k} +${v}</span>`).join('');
+    const action=mode==='shop'
+      ? `<button class="btn small" data-buy="${card.id}" ${state.tao<costFor(card)||state.inventory.length>=MAX_INVENTORY?'disabled':''}>Comprar · ${costFor(card)} Tāo</button>`
+      : `<button class="btn small" data-use="${card.id}">Usar carta</button><button class="btn danger small" data-discard="${card.id}">Remover</button>`;
+    return `<article class="card-item" style="--rarity-color:${colors}"><div class="card-top"><span class="rarity">${escapeHTML(card.rarity)}</span><span class="points">+${card.points} PTS</span></div><h3>${escapeHTML(card.name)}</h3><p>${escapeHTML(card.description)}</p><div class="bonus-list">${bonuses}</div><div class="card-actions">${action}</div></article>`;
+  }
+  function renderStatus() {
+    const taoPct=state.tao/10;
+    const stats=STAT_KEYS.map(k=>{
+      const v=Math.max(0,Number(state.stats[k])||0),pct=Math.min(100,v);
+      return `<div class="stat-row"><div class="stat-code">${k}</div><div><div class="stat-name">${STAT_INFO[k].name}</div><div class="stat-desc">${STAT_INFO[k].desc}</div><div class="stat-track"><span style="width:${pct}%"></span></div></div><div class="stat-value"><button class="mini-btn" data-stat-step="${k}" data-step="-1" aria-label="Diminuir ${k}">−</button><input aria-label="Valor ${k}" type="number" min="0" max="999999" step="1" value="${v}" data-stat-input="${k}"><button class="mini-btn" data-stat-step="${k}" data-step="1" aria-label="Aumentar ${k}">+</button></div></div>`;
+    }).join('');
+    return `<div class="section-head"><div><div class="eyebrow">01 / Painel de controle</div><h2>Seus atributos</h2><p>Acompanhe e ajuste manualmente cada atributo da sua evolução.</p></div><span class="pill">STATUS ATIVO</span></div>
+      <div class="grid two">
+        <section class="panel"><div class="panel-title"><h3>Reserva de Tāo</h3><span class="pill">MOEDA DO SISTEMA</span></div><div class="tao-panel"><div><div class="hint">SALDO DISPONÍVEL</div><div class="big-number">${formatNumber(state.tao)} <span style="font-size:15px;color:var(--accent)">Tāo</span></div><div class="progress"><span style="width:${taoPct}%"></span></div><div class="small-row"><span>0 Tāo</span><span>Limite: 1.000</span></div></div><div class="tao-controls"><button class="mini-btn" data-tao-step="-10">−10</button><input id="taoInput" type="number" min="0" max="1000" value="${state.tao}" aria-label="Saldo de Tao" style="width:78px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--panel-2);color:var(--text);font-weight:800"><button class="mini-btn" data-tao-step="10">+10</button></div></div><p class="hint" style="margin:15px 0 0">O Tāo é obtido ao concluir missões. Você também pode ajustar o saldo manualmente.</p></section>
+        <section class="panel"><div class="panel-title"><h3>Resumo de evolução</h3><span class="pill">BREAK PROFILE</span></div><div class="stat-note-grid"><div class="mini-stat"><strong>${formatNumber(statTotal())}</strong><span>Pontos totais</span></div><div class="mini-stat"><strong>${state.inventory.length}<small style="font-size:11px;color:var(--muted)">/500</small></strong><span>Cartas guardadas</span></div><div class="mini-stat"><strong>${state.missions.filter(m=>m.completed).length}</strong><span>Missões concluídas</span></div></div><p class="hint" style="margin:15px 0 0">Use cartas do armazenamento para aplicar seus pontos permanentemente aos atributos.</p></section>
+      </div>
+      <section class="panel" style="margin-top:16px"><div class="panel-title"><h3>Distribuição dos atributos</h3><span class="hint">Ajuste pelos botões ou digitando um valor</span></div><div class="stat-list">${stats}</div></section>`;
+  }
+  function renderCards() {
+    const filtered=state.inventory.filter(c=>currentFilter==='Todas'||c.rarity===currentFilter);
+    const filters=['Todas',...RARITIES.map(r=>r.name)];
+    return `<div class="section-head"><div><div class="eyebrow">02 / Arquivo pessoal</div><h2>Armazenamento de cartas</h2><p>Guarde, utilize ou remova suas cartas. Cada carta pode ser usada uma única vez.</p></div><span class="pill">${state.inventory.length} / ${MAX_INVENTORY}</span></div>
+      <section class="panel"><div class="panel-title"><h3>Capacidade do armazenamento</h3><span class="hint">${MAX_INVENTORY-state.inventory.length} espaços livres</span></div><div class="progress"><span style="width:${state.inventory.length/MAX_INVENTORY*100}%"></span></div><div class="small-row"><span>Cartas armazenadas</span><strong>${state.inventory.length} / 500</strong></div></section>
+      <div class="filter-row" style="margin:16px 0"><select id="rarityFilter" aria-label="Filtrar por raridade" style="width:auto;min-width:180px">${filters.map(f=>`<option ${currentFilter===f?'selected':''}>${f}</option>`).join('')}</select><span class="hint">${filtered.length} carta(s) nesta visualização</span></div>
+      ${filtered.length?`<div class="cards-grid">${filtered.map(c=>cardMarkup(c,'inventory')).join('')}</div>`:`<div class="empty">${state.inventory.length?'Nenhuma carta desta raridade.':'Seu armazenamento está vazio. Visite o Mercado para adquirir suas primeiras cartas.'}</div>`}`;
+  }
+  function renderShop() {
+    ensureShop();
+    const offers=getOffers();
+    const countLeft=CATALOG_SIZE-state.purchasedIds.length;
+    return `<div class="section-head"><div><div class="eyebrow">03 / Mercado do sistema</div><h2>Mercado de cartas</h2><p>Encontre cartas para aprimorar seus atributos. O estoque muda em intervalos aleatórios.</p></div><span class="pill">${countLeft} NO CATÁLOGO</span></div>
+      <div class="grid two" style="margin-bottom:16px"><section class="panel"><div class="panel-title"><h3>Seu Tāo</h3><span class="hint">Saldo para compras</span></div><div class="big-number">${formatNumber(state.tao)} <span style="font-size:14px;color:var(--accent)">Tāo</span></div><div class="progress" style="margin-top:13px"><span style="width:${state.tao/10}%"></span></div></section><section class="panel"><div class="panel-title"><h3>Próxima reposição</h3><span class="pill">ALEATÓRIA</span></div><div class="big-number" id="shopCountdown">--:--</div><p class="hint" style="margin:8px 0 0">A vitrine recebe novas ofertas entre 12 e 35 minutos.</p></section></div>
+      <div class="panel-title" style="margin:4px 0 13px"><h3>Ofertas disponíveis <span class="muted">(${offers.length})</span></h3><span class="hint">O catálogo possui ${CATALOG_SIZE.toLocaleString('pt-BR')} cartas únicas</span></div>
+      ${offers.length?`<div class="cards-grid">${offers.map(c=>cardMarkup(c,'shop')).join('')}</div>`:`<div class="empty">Todas as cartas deste catálogo já foram adquiridas. Exporte seu progresso antes de reiniciar o sistema.</div>`}
+      <p class="hint" style="margin-top:14px">O custo é calculado conforme a quantidade de pontos e a raridade. Compras são definitivas; cartas adquiridas vão para seu armazenamento.</p>`;
+  }
+  function getWeekDates() { const now=new Date();const monday=new Date(now);monday.setHours(0,0,0,0);monday.setDate(now.getDate()-((now.getDay()+6)%7));return Array.from({length:7},(_,i)=>{const d=new Date(monday);d.setDate(monday.getDate()+i);return d;}); }
+  function renderMissions() {
+    ensureCurrentWeek();
+    const weekdays=['SEG','TER','QUA','QUI','SEX','SÁB','DOM'];
+    const dates=getWeekDates();
+    const week=weekdays.map((day,i)=>`<div class="day ${state.streak.days[i]?'active':''}"><div class="day-name">${day}</div><div class="day-date">${String(dates[i].getDate()).padStart(2,'0')}/${String(dates[i].getMonth()+1).padStart(2,'0')}</div><button data-streak="${i}" aria-label="Alternar sequência de ${day}">${state.streak.days[i]?'🔥':'·'}</button></div>`).join('');
+    const streakCount=state.streak.days.filter(Boolean).length;
+    const missions=state.missions.map(m=>`<article class="mission ${m.completed?'done':''}"><div style="flex:1;min-width:0"><h4>${escapeHTML(m.name)} ${m.completed?'<span class="pill">CONCLUÍDA</span>':''}</h4><p>${escapeHTML(m.description||'Sem descrição.')}</p></div><div class="mission-reward">+${m.reward} Tāo</div><div class="card-actions"><button class="btn small ${m.completed?'secondary':''}" data-mission-toggle="${m.id}" ${m.completed?'disabled':''}>${m.completed?'Recebida':'Concluir e receber'}</button><button class="btn danger small" data-mission-delete="${m.id}" aria-label="Excluir missão">Excluir</button></div></article>`).join('');
+    return `<div class="section-head"><div><div class="eyebrow">04 / Protocolo diário</div><h2>Missões & sequência</h2><p>Crie suas próprias missões e defina quanto Tāo cada uma recompensa.</p></div><span class="pill">${state.missions.length} MISSÕES</span></div>
+      <div class="grid two"><section class="panel"><div class="panel-title"><h3>Sequência semanal</h3><span class="pill">🔥 ${streakCount} / 7</span></div><div class="week-grid">${week}</div><p class="hint" style="margin:12px 0 0">Toque no dia para marcar ou desmarcar sua sequência. O quadro reinicia ao começar uma nova semana.</p></section>
+      <section class="panel"><div class="panel-title"><h3>Nova missão</h3><span class="hint">Criação manual</span></div><form id="missionForm" class="form-grid"><div class="field full"><label for="missionName">Nome da missão</label><input id="missionName" name="name" maxlength="70" placeholder="Ex.: Revisar matemática" required></div><div class="field full"><label for="missionDescription">Descrição</label><textarea id="missionDescription" name="description" maxlength="240" placeholder="O que você precisa realizar?"></textarea></div><div class="field"><label for="missionReward">Recompensa em Tāo</label><input id="missionReward" name="reward" type="number" min="1" max="1000" value="25" required></div><div class="field" style="display:flex;align-items:end"><button class="btn" type="submit" style="width:100%">+ Criar missão</button></div></form></section></div>
+      <section class="panel" style="margin-top:16px"><div class="panel-title"><h3>Lista de missões</h3><span class="hint">Concluir concede Tāo uma vez</span></div><div class="mission-list">${missions||'<div class="empty">Nenhuma missão criada ainda. Adicione uma missão no formulário acima.</div>'}</div></section>`;
+  }
+  function renderSettings() {
+    const themes=[['midnight','Midnight','#111323','#a78bfa'],['graphite','Graphite','#171a1d','#aab7c4'],['ocean','Ocean','#0c1b27','#63c5d8'],['emerald','Emerald','#13201e','#75d7b0'],['rose','Rose','#211522','#e8a0c4']];
+    return `<div class="section-head"><div><div class="eyebrow">05 / Personalização</div><h2>Configurações</h2><p>Personalize a aparência e a trilha sonora do seu sistema.</p></div><span class="pill">PREFERÊNCIAS</span></div>
+      <section class="panel"><div class="panel-title"><h3>Design do sistema</h3><span class="hint">Escolha um tema</span></div><div class="theme-grid">${themes.map(([id,name,bg,accent])=>`<button class="theme-option ${state.settings.theme===id?'selected':''}" data-theme-choice="${id}"><div class="theme-swatch" style="background:linear-gradient(130deg,${bg},${accent})"></div><span>${name}</span></button>`).join('')}</div></section>
+      <section class="panel" style="margin-top:16px"><div class="panel-title"><h3>Música de fundo</h3><span class="pill">ARQUIVO LOCAL</span></div><p class="hint" style="margin:-5px 0 14px">Selecione um arquivo de áudio do seu aparelho. A música fica armazenada neste navegador e só toca quando você apertar reproduzir.</p><div class="sound-row"><label class="btn secondary" for="musicFile">Escolher música</label><input class="file-input" id="musicFile" type="file" accept="audio/*"><span class="sound-name" id="musicName">${escapeHTML(state.settings.musicName||'Nenhum arquivo selecionado')}</span><button class="btn small" id="playMusic">▶ Reproduzir</button><button class="btn ghost small" id="clearMusic">Remover</button></div><div style="display:flex;align-items:center;gap:12px;margin-top:17px"><label for="volume" class="hint" style="white-space:nowrap">Volume</label><input id="volume" type="range" min="0" max="1" step="0.05" value="${state.settings.volume}" style="width:100%;accent-color:var(--accent)"><span class="hint" id="volumeValue">${Math.round(state.settings.volume*100)}%</span></div></section>
+      <section class="panel" style="margin-top:16px"><div class="panel-title"><h3>Dados e salvamento</h3><span class="pill">LOCAL</span></div><p class="hint" style="margin:-5px 0 14px">O sistema salva suas alterações automaticamente neste navegador. Faça backups regulares, especialmente antes de limpar os dados do navegador.</p><div class="settings-actions"><button class="btn" id="exportData">↓ Exportar backup</button><label class="btn secondary" for="importFile">↑ Importar backup</label><input class="file-input" id="importFile" type="file" accept="application/json,.json"><button class="btn danger" id="resetData">Restaurar sistema</button></div></section>
+      <p class="hint" style="margin-top:15px">Versão 1.0 · O catálogo contém ${CATALOG_SIZE.toLocaleString('pt-BR')} cartas geradas localmente, incluindo as 13 raridades configuradas. Raridades secretas ainda não estão incluídas.</p>`;
+  }
+  function render() {
+    applyTheme();
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===activeTab));
+    document.getElementById('todayLabel').textContent=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'short'}).toUpperCase();
+    if(activeTab==='status') content.innerHTML=renderStatus();
+    if(activeTab==='cards') content.innerHTML=renderCards();
+    if(activeTab==='shop') content.innerHTML=renderShop();
+    if(activeTab==='missions') content.innerHTML=renderMissions();
+    if(activeTab==='settings') content.innerHTML=renderSettings();
+    updateCountdown();
+  }
+  function updateCountdown() {
+    const el=document.getElementById('shopCountdown');if(!el)return;
+    let remaining=Math.max(0,state.shop.nextRefreshAt-Date.now());
+    if(remaining<=0){refreshShop();if(activeTab==='shop'){render();return;}}
+    const mins=Math.floor(remaining/60000),secs=Math.floor((remaining%60000)/1000);
+    el.textContent=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+  }
+  function applyCard(id) {
+    const index=state.inventory.findIndex(c=>c.id===id);if(index<0)return;
+    const card=state.inventory[index];
+    Object.entries(card.stats).forEach(([k,v])=>state.stats[k]=Math.max(0,(Number(state.stats[k])||0)+v));
+    state.inventory.splice(index,1);save();showToast(`${card.name} utilizada. Atributos atualizados.`);render();
+  }
+  function buyCard(id) {
+    const card=catalogMap.get(id);if(!card||!state.shop.offerIds.includes(id))return;
+    const cost=costFor(card);
+    if(state.inventory.length>=MAX_INVENTORY){showToast('Armazenamento cheio. Remova ou utilize uma carta antes de comprar.');return;}
+    if(state.tao<cost){showToast('Tāo insuficiente para esta compra.');return;}
+    state.tao-=cost;state.inventory.push({...card,stats:{...card.stats}});state.purchasedIds.push(id);state.shop.offerIds=state.shop.offerIds.filter(x=>x!==id);save();showToast('Carta adicionada ao armazenamento.');render();
+  }
+  function claimMission(id) {
+    const mission=state.missions.find(m=>m.id===id);if(!mission||mission.completed)return;
+    const before=state.tao;updateTao(mission.reward);mission.completed=true;mission.claimedAt=new Date().toISOString();save();
+    const gained=state.tao-before;showToast(gained?`Missão concluída: +${gained} Tāo.`:'Missão concluída. Seu Tāo já estava no limite.');render();
+  }
+  function exportBackup() {
+    const payload={app:'BREAK System',version:1,exportedAt:new Date().toISOString(),state};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`break-system-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);showToast('Backup exportado.');
+  }
+  function importBackup(file) {
+    const reader=new FileReader();reader.onload=()=>{try{const parsed=JSON.parse(reader.result);const incoming=parsed.state||parsed;if(!incoming.stats||!Array.isArray(incoming.inventory)||!Array.isArray(incoming.missions))throw new Error('Formato inválido');state={...defaultState(),...incoming,stats:{...defaultState().stats,...incoming.stats},settings:{...defaultState().settings,...incoming.settings},shop:{...defaultState().shop,...incoming.shop},streak:{...defaultState().streak,...incoming.streak}};state.inventory=state.inventory.slice(0,MAX_INVENTORY);save();render();showToast('Backup importado com sucesso.');}catch(e){showToast('Não foi possível importar. Verifique se o arquivo é um backup válido.');}};reader.readAsText(file);
+  }
+
+  // Navegação principal.
+  document.querySelector('.nav').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;activeTab=b.dataset.tab;render();});
+  // Ações delegadas das telas.
+  content.addEventListener('click',e=>{
+    const stat=e.target.closest('[data-stat-step]');if(stat){const k=stat.dataset.statStep,step=Number(stat.dataset.step);state.stats[k]=Math.max(0,(Number(state.stats[k])||0)+step);save();render();return;}
+    const tao=e.target.closest('[data-tao-step]');if(tao){updateTao(Number(tao.dataset.taoStep));render();return;}
+    const use=e.target.closest('[data-use]');if(use){applyCard(use.dataset.use);return;}
+    const discard=e.target.closest('[data-discard]');if(discard){state.inventory=state.inventory.filter(c=>c.id!==discard.dataset.discard);save();showToast('Carta removida. Espaço liberado.');render();return;}
+    const buy=e.target.closest('[data-buy]');if(buy){buyCard(buy.dataset.buy);return;}
+    const streak=e.target.closest('[data-streak]');if(streak){const i=Number(streak.dataset.streak);state.streak.days[i]=!state.streak.days[i];save();render();return;}
+    const toggle=e.target.closest('[data-mission-toggle]');if(toggle){claimMission(toggle.dataset.missionToggle);return;}
+    const del=e.target.closest('[data-mission-delete]');if(del){state.missions=state.missions.filter(m=>m.id!==del.dataset.missionDelete);save();showToast('Missão removida.');render();return;}
+    const theme=e.target.closest('[data-theme-choice]');if(theme){state.settings.theme=theme.dataset.themeChoice;save();render();return;}
+  });
+  content.addEventListener('change',e=>{
+    if(e.target.matches('[data-stat-input]')){const k=e.target.dataset.statInput;state.stats[k]=Math.max(0,Math.min(999999,Math.round(Number(e.target.value)||0)));save();render();}
+    if(e.target.id==='taoInput'){state.tao=Math.max(0,Math.min(1000,Math.round(Number(e.target.value)||0)));save();render();}
+    if(e.target.id==='rarityFilter'){currentFilter=e.target.value;render();}
+  });
+  content.addEventListener('submit',e=>{
+    if(e.target.id!=='missionForm')return;e.preventDefault();const fd=new FormData(e.target);const name=String(fd.get('name')||'').trim();const description=String(fd.get('description')||'').trim();const reward=Math.max(1,Math.min(1000,Math.round(Number(fd.get('reward'))||1)));if(!name){showToast('Digite um nome para a missão.');return;}
+    state.missions.unshift({id:`mission-${Date.now()}-${Math.random().toString(16).slice(2,7)}`,name,description,reward,completed:false,createdAt:new Date().toISOString()});save();showToast('Nova missão criada.');render();
+  });
+
+  // Saldo de Tāo e música.
+  const audioDB='break-system-media';
+  function openAudioDB() { return new Promise((resolve,reject)=>{if(!('indexedDB'in window)){reject(new Error('IndexedDB indisponível'));return;}const req=indexedDB.open(audioDB,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('files'))req.result.createObjectStore('files');};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);}); }
+  async function saveMusicBlob(blob) { const db=await openAudioDB();return new Promise((resolve,reject)=>{const tx=db.transaction('files','readwrite');tx.objectStore('files').put(blob,'background-music');tx.oncomplete=()=>{db.close();resolve();};tx.onerror=()=>{db.close();reject(tx.error);};}); }
+  async function getMusicBlob() { const db=await openAudioDB();return new Promise((resolve,reject)=>{const req=db.transaction('files','readonly').objectStore('files').get('background-music');req.onsuccess=()=>{db.close();resolve(req.result||null);};req.onerror=()=>{db.close();reject(req.error);};}); }
+  async function deleteMusicBlob() { try{const db=await openAudioDB();await new Promise((resolve,reject)=>{const tx=db.transaction('files','readwrite');tx.objectStore('files').delete('background-music');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});db.close();}catch(e){} }
+  let audioObjectUrl=null;
+  async function restoreMusic() { if(!state.settings.musicName)return;try{const blob=await getMusicBlob();if(blob){audioObjectUrl=URL.createObjectURL(blob);audio.src=audioObjectUrl;audio.volume=state.settings.volume;}}catch(e){console.warn('Áudio local indisponível',e);} }
+  content.addEventListener('change',async e=>{
+    if(e.target.id==='musicFile'){const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith('audio/')){showToast('Escolha um arquivo de áudio.');return;}try{await saveMusicBlob(file);if(audioObjectUrl)URL.revokeObjectURL(audioObjectUrl);audioObjectUrl=URL.createObjectURL(file);audio.src=audioObjectUrl;state.settings.musicName=file.name;save();render();showToast('Música adicionada. Aperte reproduzir para ouvir.');}catch(err){showToast('Não foi possível guardar esse arquivo neste navegador.');}}
+    if(e.target.id==='importFile'){const file=e.target.files?.[0];if(file)importBackup(file);e.target.value='';}
+  });
+  content.addEventListener('input',e=>{
+    if(e.target.id==='volume'){state.settings.volume=Number(e.target.value);audio.volume=state.settings.volume;const label=document.getElementById('volumeValue');if(label)label.textContent=`${Math.round(state.settings.volume*100)}%`;save();}
+  });
+  content.addEventListener('click',async e=>{
+    if(e.target.id==='playMusic'){if(!audio.src){showToast('Selecione uma música primeiro.');return;}try{if(audio.paused){await audio.play();e.target.textContent='Ⅱ Pausar';}else{audio.pause();e.target.textContent='▶ Reproduzir';}}catch(err){showToast('Não foi possível reproduzir este arquivo.');}}
+    if(e.target.id==='clearMusic'){audio.pause();audio.removeAttribute('src');audio.load();if(audioObjectUrl)URL.revokeObjectURL(audioObjectUrl);audioObjectUrl=null;await deleteMusicBlob();state.settings.musicName='';save();render();showToast('Música removida.');}
+    if(e.target.id==='exportData')exportBackup();
+    if(e.target.id==='resetData'){if(confirm('Isso apagará atributos, cartas, missões e Tāo salvos neste aparelho. Exporte um backup antes. Continuar?')){state=defaultState();save();render();showToast('Sistema restaurado.');}}
+  });
+
+  // Inicialização: estoque, semana, tema e arquivo de áudio salvo.
+  ensureCurrentWeek();ensureShop();applyTheme();render();restoreMusic();
+  setInterval(()=>{if(activeTab==='shop')updateCountdown();else if(Date.now()>=state.shop.nextRefreshAt)refreshShop();},1000);
+})();
 </script>
-</body></html>
+</body>
+ </html>
